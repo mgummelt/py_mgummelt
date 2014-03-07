@@ -62,12 +62,3 @@ def wsgi_app(app):
         return [body.encode('utf8')]
 
     return wsgi_app
-
-
-def run(app, static=None):
-    wapp = wsgi_app(app)
-    if static:
-        wapp = SharedDataMiddleware(wapp,
-                                    {static[0]: static[1]},
-                                    cache=False)
-    run_simple('localhost', 8080, wapp, True)
