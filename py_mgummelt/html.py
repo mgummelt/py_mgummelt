@@ -8,26 +8,19 @@ def page(title, c, css=[], js=[], less=[]):
         return tag('link', '',
                    rel='stylesheet',
                    type='text/css',
-                   href='static/css/{}.css'.format(href))
-
-    def less_link(href):
-        return tag('link', '',
-                   rel='stylesheet/less',
-                   type='text/css',
-                   href='static/less/{}.less'.format(href))
+                    href=href if href.startswith('http://') else 'static/css/{}.css'.format(href))
 
     def head():
         return tag('head',
                    tag('title', title) +
                    tag('meta', '', charset='utf8') +
-                   ''.join(map(less_link, less)) +
                    ''.join(map(css_link, css)) +
                    ''.join(map(script, js)))
 
     return '<!DOCTYPE html>' + html()
 
-def button_link(c, href):
-    return a(href, c, Class='button')
+def button_link(c, href, **kwargs):
+    return a(href, c, Class='button', **kwargs)
 
 def script(src):
     return tag('script', '', src='static/js/{}.js'.format(src))
