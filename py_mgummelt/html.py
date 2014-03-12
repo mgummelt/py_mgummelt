@@ -19,9 +19,6 @@ def page(title, c, css=[], js=[], less=[]):
 
     return '<!DOCTYPE html>' + html()
 
-def button_link(c, href, **kwargs):
-    return a(href, c, Class='button', **kwargs)
-
 def script(src):
     return tag('script', '', src='static/js/{}.js'.format(src))
 
