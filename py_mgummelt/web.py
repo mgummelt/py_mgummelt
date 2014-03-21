@@ -22,12 +22,14 @@ class SafeRequest(Request):
 
     parameter_storage_class = SafeArgDict
 
-def with_params(url, **kwargs):
+def url_params(url, *args, **kwargs):
     ''' url with added k=v param '''
     parts = list(urlparse(url))
     query = dict(parse_qsl(parts[4]))
     query.update(kwargs)
     parts[4] = urlencode(query)
+    if args:
+        parts[4] += '&' + '&'.join(args)
     return urlunparse(parts)
 
 def wsgi_app(app):
