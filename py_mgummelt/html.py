@@ -1,3 +1,5 @@
+from urlparse import urlparse
+
 def page(title, c, css=[], js=[], less=[]):
     def html():
         return tag('html',
@@ -5,10 +7,13 @@ def page(title, c, css=[], js=[], less=[]):
                    lang='en')
 
     def css_link(href):
+        if not urlparse(href).netloc:
+            href = 'static/css/{}.css'.format(href)
+
         return tag('link', '',
                    rel='stylesheet',
                    type='text/css',
-                    href=href if href.startswith('http://') else 'static/css/{}.css'.format(href))
+                   href=href)
 
     def head():
         return tag('head',
