@@ -6,22 +6,6 @@ from werkzeug.wrappers import Request, Response
 from werkzeug.wsgi import SharedDataMiddleware
 from werkzeug.datastructures import ImmutableMultiDict
 
-class SafeRequest(Request):
-    class SafeArgDict(ImmutableMultiDict):
-        def __getitem__(self, k):
-            v = super(ImmutableMultiDict, self).__getitem__(k) \
-                                               .replace('&', '&amp;')
-
-            syntax_chars = {'<': '&lt;',
-                            '>': '&gt;',
-                            '"': '&quot;',
-                            "'": '&#x27;'}
-            for c, r in syntax_chars.iteritems():
-                v = v.replace(c, r)
-            return v
-
-    parameter_storage_class = SafeArgDict
-
 def url_params(url, *args, **kwargs):
     ''' url with added k=v param '''
     parts = list(urlparse(url))

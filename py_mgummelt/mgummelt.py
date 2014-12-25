@@ -4,7 +4,10 @@ import calendar
 import cProfile, pstats
 from itertools import chain
 
-class profiling:
+class Profiling:
+    ''' with Profiling():
+            <code>
+    '''
     def __init__(self,
                  stats_file = 'profile.stats',
                  print_file = 'profile.txt'):
@@ -51,5 +54,8 @@ def ensure_dir(path):
     if not os.path.exists(path):
         os.makedirs(path)
 
-def dt_to_ts(dt):
+def datetime_to_unix(dt):
+    ''' convert datetime.datetime to unix timestamp
+        returns: int
+    '''
     return calendar.timegm(dt.utctimetuple())
